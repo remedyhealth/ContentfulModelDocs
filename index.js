@@ -25,7 +25,8 @@ async function queryContentful() {
         description,
         fields: f.map(({name, type, required}) => ([name, type === 'Symbol' ? 'String' : type, required]))
       }
-      return arr.push(strippedObj)
+      arr.push(strippedObj)
+      return arr
     }, [])
     
     console.log(JSON.stringify(formattedRes, 0, 2))
