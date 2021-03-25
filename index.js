@@ -18,7 +18,7 @@ async function queryContentful() {
     core.setSecret(spaceId)
     core.setSecret(accessToken)
     
-    const response = await fetch(`https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}`)
+    const response = await fetch(`https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}&order=name`)
       .then(res => res.json())
       .catch(err => {
         err.contentfulId = response && response.headers && response.headers.get('x-contentful-request-id')
@@ -37,6 +37,8 @@ async function queryContentful() {
       arr.push(strippedObj)
       return arr
     }, [])
+      
+      // .sort(cTypes => cType.name)
     
     console.log(JSON.stringify(formattedRes, 0, 2))
     
