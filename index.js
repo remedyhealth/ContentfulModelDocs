@@ -12,7 +12,7 @@ async function queryContentful() {
     core.setSecret(accessToken)
     
     
-    const response = await fetch(`https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${access_token}`)
+    const response = await fetch(`https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}`)
       .then(res => res.json())
       .catch(err => {
         err.contentfulId = response && response.headers && response.headers.get('x-contentful-request-id')
