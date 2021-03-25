@@ -23,8 +23,9 @@ async function queryContentful() {
       const strippedObj = {
         name,
         description,
-        fields: f.map(({name, type, required}) => ([name, type === 'Symbol' ? 'String' : type, required]))
+        fields: f.map(({name, id, type, required}) => ([name, id, type === 'Symbol' ? 'String' : type, required]))
       }
+      strippedObj.fields.unshift(['name', 'id', 'type', 'required'])
       arr.push(strippedObj)
       return arr
     }, [])
