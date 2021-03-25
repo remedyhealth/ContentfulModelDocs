@@ -1,10 +1,15 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  space_id: # ID of the Contentful space in form of a string
+    description: 'ID of the Contentful space in form of a string'
     required: true
-    default: 'World'
+  environment_id: # ID of the Contentful environment in form of a string (ex: staging)
+    description: 'ID of the Contentful environment in form of a string (ex: staging)'
+    required: true
+  access_token: # A production Contentful Content Delivery API key
+    description: 'A production Contentful Content Delivery API key'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
