@@ -1,0 +1,24 @@
+{
+  "name": "ContentfulModelDocs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SavSamoylov/ContentfulModelDocs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SavSamoylov/ContentfulModelDocs/issues"
+  },
+  "homepage": "https://github.com/SavSamoylov/ContentfulModelDocs#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0"
+  }
+}
