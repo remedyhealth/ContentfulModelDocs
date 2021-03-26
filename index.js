@@ -87,13 +87,17 @@ ${createTables(formattedRes)}
     // await exec.exec('git --version');
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
     console.log(await exec.exec('git remote -v'))
+    core.debug(
+      '> Current git config\n' +
+      JSON.stringify((await git.listConfig()).all, null, 2)
+    )
     console.log(path.resolve(__dirname))
     const diff = await git.diffSummary()
     console.log(diff)
 
     // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
-    const context = JSON.stringify(github.context, undefined, 2)
+    // const payload = JSON.stringify(github.context.payload, undefined, 2)
+    // const context = JSON.stringify(github.context, undefined, 2)
     // console.log(`The event context: ${context}`);
     // console.log(`The event payload: ${payload}`);
   } catch (error) {
