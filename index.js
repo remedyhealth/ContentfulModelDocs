@@ -129,9 +129,9 @@ ${createTables(formattedRes)}
       await git
         .addConfig('user.email', gitUserName || pusher.email)
         .addConfig('user.name', gitEmail || pusher.name)
+      await git.pull()
       await git.add([outputRelativePath])
       await git.commit(`docs: job ${job} ${runNumber} [NO_RERUN]`)
-      
       try {
         await git.push('origin', branchName)
       } catch (err) {
