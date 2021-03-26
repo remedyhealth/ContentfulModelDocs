@@ -1,6 +1,8 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const artifact = require('@actions/artifact');
 const fetch = require('node-fetch');
+const fs = require('fs')
 
 const createToC = (cTypes = []) => {
   let str = ''
@@ -14,9 +16,6 @@ const jsonToMarkdownTable = (fields = []) => {
   let str = ''
   fields.forEach((field) => {
     const row = `| ${field.join(' | ')} |`
-    // const tableRow = row.map((columnValue, index) => {
-    //   return (index === 0 ? `| ${columnValue}` : columnValue) + ' |'
-    // })
     str+=`${row}\n`
   })
   return str
@@ -71,6 +70,22 @@ ${createTables(formattedRes)}
 `
     
     console.log(buildMarkdown)
+    
+    fs.writeFileSync('content-model.md', buildMarkdown)
+    
+    const artifactClient = artifact.create()
+    const artifactName = 'contentful-content-model';
+    const files = [
+      'content-model.md'
+    ]
+    const rootDirectory = '.'
+    const options = {
+      continueOnError: true
+    }
+
+    const uploadResult = await artifactClient.uploadArtifact(artifactName, files, rootDirectory, options)
+    console.log(uploadResult)
+    
     
     
     const time = (new Date()).toTimeString();
