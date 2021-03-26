@@ -94,18 +94,25 @@ ${createTables(formattedRes)}
     // console.log(await exec.exec('git remote -v'))
     // console.log(process.cwd())
     const gitStatus = await git.status()
-    console.log(gitStatus)
+    // console.log(gitStatus)
+    console.log(
+      '> Current git config\n' +
+      JSON.stringify((await git.listConfig()).all, null, 2)
+    )
     if (gitStatus['not_added'].includes('content-model.md')) {
+      await git
+        .addConfig('user.email', github.context.payload.pusher.email)
+        .addConfig('user.name', github.context.payload.pusher.name)
       await git.add(['content-model.md'])
       await git.commit(`docs: job ${github.context.job} ${github.context.runNumber} [NO_RERUN]`)
       await git.push()
     }
     console.log(JSON.stringify((await git.status()), null, 2))
-    await exec.exec('git rev-parse --abbrev-ref HEAD');
-    // console.log(
-    //   '> Current git config\n' +
-    //   JSON.stringify((await git.listConfig()).all, null, 2)
-    // )
+    // await exec.exec('git rev-parse --abbrev-ref HEAD');
+    console.log(
+      '> Current git config\n' +
+      JSON.stringify((await git.listConfig()).all, null, 2)
+    )
     // console.log(path.resolve(__dirname))
     const diff = await git.diffSummary()
     console.log(diff)
