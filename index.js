@@ -90,7 +90,7 @@ ${createTables(formattedRes)}
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
     console.log(await exec.exec('git remote -v'))
     console.log(process.cwd())
-    console.log(JSON.stringify((await git.status()).all, null, 2))
+    console.log(JSON.stringify((await git.status()), null, 2))
     console.log(
       '> Current git config\n' +
       JSON.stringify((await git.listConfig()).all, null, 2)
