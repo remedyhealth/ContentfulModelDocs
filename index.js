@@ -34,7 +34,7 @@ const createTables = (cTypes = []) => {
 
 async function queryContentful() {
   try {
-    const git = simpleGit(path.resolve(__dirname));
+    const git = simpleGit({ baseDir: path.resolve(__dirname) });
     const spaceId = core.getInput('space_id');
     const envId = core.getInput('environment_id');
     const accessToken = core.getInput('access_token');
