@@ -38,10 +38,6 @@ async function queryContentful() {
     core.setSecret(spaceId)
     core.setSecret(accessToken)
     
-    await exec.exec('git --version');
-    await exec.exec('git rev-parse --abbrev-ref HEAD');
-
-
     const response = await fetch(`https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}&order=name`)
       .then(res => res.json())
       .catch(err => {
@@ -84,12 +80,11 @@ ${createTables(formattedRes)}
     }
 
     const uploadResult = await artifactClient.uploadArtifact(artifactName, files, rootDirectory, options)
-    console.log(uploadResult)
 
+    await exec.exec('git --version');
+    await exec.exec('git rev-parse --abbrev-ref HEAD');
+    await exec.exec('git diff --name-only');
 
-
-    const time = (new Date()).toTimeString();
-    core.setOutput("time", time);
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     const context = JSON.stringify(github.context, undefined, 2)
