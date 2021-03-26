@@ -6,6 +6,8 @@ const simpleGit = require('simple-git');
 const fetch = require('node-fetch');
 const fs = require('fs')
 const path = require('path')
+const { spawn } = require('child_process')
+
 
 const createToC = (cTypes = []) => {
   let str = ''
@@ -94,6 +96,21 @@ ${createTables(formattedRes)}
     console.log(path.resolve(__dirname))
     const diff = await git.diffSummary()
     console.log(diff)
+    
+    const command = spawn('ls -la')
+
+    command.stdout.on('data', (data) => {
+      console.log(`${data}`)
+    })
+
+    command.stderr.on('data', (data) => {
+      console.error(`${data}`)
+    })
+
+    command.on('close', (code) => {
+      console.log(`child process exited with code ${code}`)
+      process.exit(code)
+    })
 
     // Get the JSON webhook payload for the event that triggered the workflow
     // const payload = JSON.stringify(github.context.payload, undefined, 2)
