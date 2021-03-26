@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const artifact = require('@actions/artifact');
+const exec = require('@actions/exec');
 const fetch = require('node-fetch');
 const fs = require('fs')
 
@@ -36,6 +37,10 @@ async function queryContentful() {
     const accessToken = core.getInput('access_token');
     core.setSecret(spaceId)
     core.setSecret(accessToken)
+    
+    await exec.exec('git -version');
+    await exec.exec('git rev-parse --abbrev-ref HEAD');
+
 
     const response = await fetch(`https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}&order=name`)
       .then(res => res.json())
