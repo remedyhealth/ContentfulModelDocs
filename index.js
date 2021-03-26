@@ -38,7 +38,7 @@ async function queryContentful() {
     core.setSecret(spaceId)
     core.setSecret(accessToken)
     
-    await exec.exec('git -version');
+    await exec.exec('git --version');
     await exec.exec('git rev-parse --abbrev-ref HEAD');
 
 
