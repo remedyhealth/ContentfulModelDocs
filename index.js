@@ -86,7 +86,7 @@ ${createTables(formattedRes)}
     // await exec.exec('git --version');
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
     const diff = await git.diff()
-    core.debug(diff)
+    core.info(diff)
 
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2)
