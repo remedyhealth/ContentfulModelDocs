@@ -136,7 +136,7 @@ ${createTables(formattedRes)}
         await git.push('origin', branchName)
       } catch (err) {
         console.error(err)
-        await git.fetch('origin', branchName)
+        await git.fetch('origin', branchName, ['--force'])
         
         try {
           await git.checkout(branchName)
