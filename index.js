@@ -3,7 +3,6 @@ const github = require('@actions/github');
 const artifact = require('@actions/artifact');
 const exec = require('@actions/exec');
 const simpleGit = require('simple-git');
-const git = simpleGit();
 const fetch = require('node-fetch');
 const fs = require('fs')
 const path = require('path')
@@ -35,6 +34,7 @@ const createTables = (cTypes = []) => {
 
 async function queryContentful() {
   try {
+    const git = simpleGit(path.resolve(__dirname));
     const spaceId = core.getInput('space_id');
     const envId = core.getInput('environment_id');
     const accessToken = core.getInput('access_token');
