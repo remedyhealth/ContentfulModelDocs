@@ -89,7 +89,8 @@ ${createTables(formattedRes)}
     // await exec.exec('git --version');
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
     console.log(await exec.exec('git remote -v'))
-    core.debug(
+    console.log(await exec.exec('git status'))
+    console.log(
       '> Current git config\n' +
       JSON.stringify((await git.listConfig()).all, null, 2)
     )
