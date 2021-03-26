@@ -36,6 +36,11 @@ const createTables = (cTypes = []) => {
 }
 
 async function queryContentful() {
+  // Github Contexts
+  const { job, runNumber, payload } = github.context
+  const { 'head_commit': headCommit, repository} = payload
+  console.log(job, runNumber)
+  console.log(headCommit, repository)
   if (github.context.payload['head_commit'].message.includes('[NO_RERUN]')) {
     return
   }
@@ -113,12 +118,12 @@ ${createTables(formattedRes)}
     // console.log(process.cwd())
     const gitStatus = await git.status()
     // console.log(gitStatus)
-    console.log(
-      '> Current git config\n' +
-      JSON.stringify((await git.listConfig()).all, null, 2)
-    )
+    // console.log(
+    //   '> Current git config\n' +
+    //   JSON.stringify((await git.listConfig()).all, null, 2)
+    // )
     
-    console.log(gitStatus['not_added'].includes(outputPath))
+    // console.log(gitStatus['not_added'].includes(outputPath))
     
     if (gitStatus['not_added'].includes(outputPath) || gitStatus['not_added'].includes(outputRelativePath)) {
       await git
@@ -128,12 +133,12 @@ ${createTables(formattedRes)}
       await git.commit(`docs: job ${github.context.job} ${github.context.runNumber} [NO_RERUN]`)
       await git.push('origin', branchName)
     }
-    console.log(JSON.stringify((await git.status()), null, 2))
+    // console.log(JSON.stringify((await git.status()), null, 2))
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
-    console.log(
-      '> Current git config\n' +
-      JSON.stringify((await git.listConfig()).all, null, 2)
-    )
+    // console.log(
+    //   '> Current git config\n' +
+    //   JSON.stringify((await git.listConfig()).all, null, 2)
+    // )
     // console.log(path.resolve(__dirname))
     // const diff = await git.diffSummary()
     // console.log(diff)
@@ -155,8 +160,8 @@ ${createTables(formattedRes)}
 
     // Get the JSON webhook payload for the event that triggered the workflow
     // const payload = JSON.stringify(github.context.payload, undefined, 2)
-    const context = JSON.stringify(github.context, undefined, 2)
-    console.log(`The event context: ${context}`);
+    // const context = JSON.stringify(github.context, undefined, 2)
+    // console.log(`The event context: ${context}`);
     // console.log(`The event payload: ${payload}`);
   } catch (error) {
     core.setFailed(error.message);
