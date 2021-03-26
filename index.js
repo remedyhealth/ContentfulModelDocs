@@ -137,6 +137,7 @@ ${createTables(formattedRes)}
       } catch (err) {
         console.error(err)
         await git.checkoutBranch(branchName)
+        await exec.exec('git rev-parse --abbrev-ref HEAD');
         await git.push(['-u', 'origin', branchName])
       }
     }
