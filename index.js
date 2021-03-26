@@ -20,6 +20,7 @@ const jsonToMarkdownTable = (arr = []) => {
       str+=`${row}\n`
     })
   })
+  return str
 }
 
 const createTables = (cTypes = []) => {
