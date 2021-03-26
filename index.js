@@ -43,7 +43,7 @@ async function queryContentful() {
   try {
     const git = simpleGit({ baseDir: path.resolve(__dirname) });
     
-    const spaceId = core.getInput('space_id');
+    const spaceId = core.getInput('spaceId');
     const envId = core.getInput('envId');
     const accessToken = core.getInput('accessToken');
     const queryParams = core.getInput('queryParams');

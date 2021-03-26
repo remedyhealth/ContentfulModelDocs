@@ -21,7 +21,7 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: contentful
         with:
-          space_id: ${{ secrets.CONTENTFUL_SPACE_ID }}
-          environment_id: 'master'
-          access_token: ${{ secrets.CONTENTFUL_KEY }}
+          spaceId: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          envId: 'master'
+          accessToken: ${{ secrets.CONTENTFUL_KEY }}
 
