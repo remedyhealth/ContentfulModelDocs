@@ -88,37 +88,42 @@ ${createTables(formattedRes)}
 
     // await exec.exec('git --version');
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
-    console.log(await exec.exec('git remote -v'))
-    console.log(process.cwd())
+    // console.log(await exec.exec('git remote -v'))
+    // console.log(process.cwd())
+    const gitStatus = await git.status()
+    console.log(gitStatus)
+    if (gitStatus['not_added'].includes('content-model.md')) {
+      git.add(['content-model.md'])
+    }
     console.log(JSON.stringify((await git.status()), null, 2))
-    console.log(
-      '> Current git config\n' +
-      JSON.stringify((await git.listConfig()).all, null, 2)
-    )
-    console.log(path.resolve(__dirname))
+    // console.log(
+    //   '> Current git config\n' +
+    //   JSON.stringify((await git.listConfig()).all, null, 2)
+    // )
+    // console.log(path.resolve(__dirname))
     const diff = await git.diffSummary()
     console.log(diff)
     
-    const command = spawn('ls', ['-la'])
+    // const command = spawn('ls', ['-la'])
 
-    command.stdout.on('data', (data) => {
-      console.log(`${data}`)
-    })
+    // command.stdout.on('data', (data) => {
+    //   console.log(`${data}`)
+    // })
 
-    command.stderr.on('data', (data) => {
-      console.error(`${data}`)
-    })
+    // command.stderr.on('data', (data) => {
+    //   console.error(`${data}`)
+    // })
 
-    command.on('close', (code) => {
-      console.log(`child process exited with code ${code}`)
-      process.exit(code)
-    })
+    // command.on('close', (code) => {
+    //   console.log(`child process exited with code ${code}`)
+    //   process.exit(code)
+    // })
 
     // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
+    // const payload = JSON.stringify(github.context.payload, undefined, 2)
     // const context = JSON.stringify(github.context, undefined, 2)
     // console.log(`The event context: ${context}`);
-    console.log(`The event payload: ${payload}`);
+    // console.log(`The event payload: ${payload}`);
   } catch (error) {
     core.setFailed(error.message);
   }
