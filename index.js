@@ -49,7 +49,7 @@ async function queryContentful() {
     const queryParams = core.getInput('queryParams');
     const fileName = core.getInput('fileName');
     const outputDir = core.getInput('outputDir') || '.';
-    const branchName = core.getInput('branchName');
+    const branchName = core.getInput('branchName') || github.context.payload.repository['master_branch'] || undefined;
     const gitUserName = core.getInput('gitUserName');
     const gitEmail = core.getInput('gitEmail');
     core.setSecret(spaceId)
@@ -126,7 +126,7 @@ ${createTables(formattedRes)}
         .addConfig('user.name', gitEmail || github.context.payload.pusher.name)
       await git.add([outputRelativePath])
       await git.commit(`docs: job ${github.context.job} ${github.context.runNumber} [NO_RERUN]`)
-      await git.push()
+      await git.push('origin', branchName)
     }
     console.log(JSON.stringify((await git.status()), null, 2))
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
