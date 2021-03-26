@@ -85,14 +85,15 @@ ${createTables(formattedRes)}
 
     // await exec.exec('git --version');
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
+    console.log(await exec.exec('cwd'))
     const diff = await git.diff()
     console.log(diff)
 
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     const context = JSON.stringify(github.context, undefined, 2)
-    console.log(`The event context: ${context}`);
-    console.log(`The event payload: ${payload}`);
+    // console.log(`The event context: ${context}`);
+    // console.log(`The event payload: ${payload}`);
   } catch (error) {
     core.setFailed(error.message);
   }
