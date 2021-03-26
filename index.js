@@ -59,6 +59,7 @@ async function queryContentful() {
     
     const queryUrl = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}&order=name&${queryParams}`
     const outputPath = path.join(__dirname, outputDir, fileName)
+    console.log(outputPath)
     io.mkdirP(outputDir)
     core.info(`Fetching data from Contentful: ${queryUrl}`)
     
