@@ -25,5 +25,6 @@ jobs:
           envId: 'master'
           accessToken: ${{ secrets.CONTENTFUL_KEY }}
           fileName: 'test-new-file-name'
-          outputDir: './anotherOne/hi'
+          outputDir: 'content-model'
+          branchName: 'new-branch'
 
