@@ -25,7 +25,7 @@ jobs:
           envId: 'master'
           accessToken: ${{ secrets.CONTENTFUL_KEY }}
           fileName: 'test-new-file-name'
-          outputDir: 'content-model'
+          outputDir: 'content-model-2'
           branchName: 'new-branch'
           gitUserName: 'SavSamoylov'
           gitEmail: ${{ github.secrets.GIT_EMAIL }}
