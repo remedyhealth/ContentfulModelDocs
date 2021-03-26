@@ -140,7 +140,7 @@ ${createTables(formattedRes)}
         
         try {
           await git.checkout(branchName)
-          await git.push(['origin', branchName])
+          await git.push('origin', branchName)
         } catch (err) {
           console.log(err)
           await git.checkoutLocalBranch(branchName)
