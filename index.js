@@ -129,15 +129,17 @@ ${createTables(formattedRes)}
       await git
         .addConfig('user.email', gitUserName || pusher.email)
         .addConfig('user.name', gitEmail || pusher.name)
-      await git.pull()
+      // await git.pull()
       await git.add([outputRelativePath])
       await git.commit(`docs: job ${job} ${runNumber} [NO_RERUN]`)
       try {
         await git.push('origin', branchName)
       } catch (err) {
         console.error(err)
-        await git.checkoutLocalBranch(branchName)
-        await git.pull('origin', branchName)
+        await git
+          .checkout(branchName)
+          .catch((err) => git.checkoutLocalBranch(branchName))
+        // await git.pull('origin', branchName)
         await git.push(['-u', 'origin', branchName])
       }
     }
