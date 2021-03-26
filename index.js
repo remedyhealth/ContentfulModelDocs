@@ -2,6 +2,8 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const artifact = require('@actions/artifact');
 const exec = require('@actions/exec');
+const simpleGit = require('simple-git');
+const git = simpleGit();
 const fetch = require('node-fetch');
 const fs = require('fs')
 
@@ -81,9 +83,10 @@ ${createTables(formattedRes)}
 
     const uploadResult = await artifactClient.uploadArtifact(artifactName, files, rootDirectory, options)
 
-    await exec.exec('git --version');
-    await exec.exec('git rev-parse --abbrev-ref HEAD');
-    await exec.exec('git diff');
+    // await exec.exec('git --version');
+    // await exec.exec('git rev-parse --abbrev-ref HEAD');
+    const diff = await git.diff()
+    core.debug(diff)
 
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2)
