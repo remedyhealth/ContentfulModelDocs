@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const artifact = require('@actions/artifact');
 const exec = require('@actions/exec');
+const io = require('@actions/io');
 const simpleGit = require('simple-git');
 const fetch = require('node-fetch');
 const fs = require('fs')
@@ -38,15 +39,30 @@ async function queryContentful() {
   if (github.context.payload['head_commit'].message.includes('[NO_RERUN]')) {
     return
   }
+  
   try {
     const git = simpleGit({ baseDir: path.resolve(__dirname) });
+    
     const spaceId = core.getInput('space_id');
-    const envId = core.getInput('environment_id');
-    const accessToken = core.getInput('access_token');
+    const envId = core.getInput('envId');
+    const accessToken = core.getInput('accessToken');
+    const queryParams = core.getInput('queryParams');
+    const fileName = core.getInput('fileName');
+    const outputDir = core.getInput('outputDir') || '.';
+    const branchName = core.getInput('branchName');
+    const gitUserName = core.getInput('gitUserName');
+    const gitEmail = core.getInput('gitEmail');
     core.setSecret(spaceId)
     core.setSecret(accessToken)
+    core.setSecret(gitUserName)
+    core.setSecret(gitEmail)
     
-    const response = await fetch(`https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}&order=name`)
+    const queryUrl = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}&order=name&${queryParams}`
+    const outputPath = path.join(__dirname, outputDir, fileName)
+    
+    core.info(`Fetching data from Contentful: ${queryUrl}`)
+    
+    const response = await fetch(queryUrl)
       .then(res => res.json())
       .catch(err => {
         err.contentfulId = response && response.headers && response.headers.get('x-contentful-request-id')
@@ -75,12 +91,12 @@ Table of Contents
 ${createToC(formattedRes.map(item => item.name))}
 ${createTables(formattedRes)}
 `
-    fs.writeFileSync('content-model.md', buildMarkdown)
+    fs.writeFileSync(outputPath, buildMarkdown)
 
     const artifactClient = artifact.create()
     const artifactName = 'contentful-content-model';
     const files = [
-      'content-model.md'
+      outputPath
     ]
     const rootDirectory = '.'
     const options = {
@@ -99,11 +115,11 @@ ${createTables(formattedRes)}
       '> Current git config\n' +
       JSON.stringify((await git.listConfig()).all, null, 2)
     )
-    if (gitStatus['not_added'].includes('content-model.md')) {
+    if (gitStatus['not_added'].includes(outputPath)) {
       await git
-        .addConfig('user.email', github.context.payload.pusher.email)
-        .addConfig('user.name', github.context.payload.pusher.name)
-      await git.add(['content-model.md'])
+        .addConfig('user.email', gitUserName || github.context.payload.pusher.email)
+        .addConfig('user.name', gitEmail || github.context.payload.pusher.name)
+      await git.add([outputPath])
       await git.commit(`docs: job ${github.context.job} ${github.context.runNumber} [NO_RERUN]`)
       await git.push()
     }
@@ -114,8 +130,8 @@ ${createTables(formattedRes)}
       JSON.stringify((await git.listConfig()).all, null, 2)
     )
     // console.log(path.resolve(__dirname))
-    const diff = await git.diffSummary()
-    console.log(diff)
+    // const diff = await git.diffSummary()
+    // console.log(diff)
     
     // const command = spawn('ls', ['-la'])
 

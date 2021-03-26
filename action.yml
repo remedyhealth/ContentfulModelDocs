@@ -1,15 +1,36 @@
 name: 'Contentful Content Model Doc Generator'
 description: 'Generate Markdown docs of a Contentful space Content Model.'
 inputs:
-  space_id: # ID of the Contentful space in form of a string
+  spaceId: # ID of the Contentful space in form of a string
     description: 'ID of the Contentful space in form of a string'
     required: true
-  environment_id: # ID of the Contentful environment in form of a string (ex: staging)
+  envId: # ID of the Contentful environment in form of a string (ex: staging)
     description: 'ID of the Contentful environment in form of a string (ex: staging)'
     required: true
-  access_token: # A production Contentful Content Delivery API key
+  accessToken: # A production Contentful Content Delivery API key
     description: 'A production Contentful Content Delivery API key'
     required: true
+  queryParams: # URL query params to filter Contentfuls Payload
+    description: 'URL query params to filter Contentfuls Payload'
+    required: false
+    default: ''
+  fileName: # Name of generated file
+    description: 'Name of generated file'
+    required: false
+    default: 'content-model'
+  outputDir: # Path to where you want to output the files
+    description: 'Path to where you want to output the files'
+    required: false
+    default: './docs'
+  branchName: # Name of branch to push to
+    description: 'Name of branch to push to'
+    required: false
+  gitUserName: # Authenticating git user.name
+    description: 'Authenticating git user.name'
+    required: false
+  gitEmail: # Authenticating git user.email
+    description: 'Authenticating git user.email'
+    required: false
 runs:
   using: 'node12'
   main: 'index.js'
