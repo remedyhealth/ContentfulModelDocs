@@ -24,9 +24,9 @@ jobs:
           spaceId: ${{ secrets.CONTENTFUL_SPACE_ID }}
           envId: 'master'
           accessToken: ${{ secrets.CONTENTFUL_KEY }}
-          fileName: 'test-new-file-name'
-          outputDir: 'content-model-2'
+          # fileName: 'data-model'
+          # outputDir: 'content-model'
+          # gitUserName: 'SavSamoylov'
+          # gitEmail: ${{ github.secrets.GIT_EMAIL }}
           # branchName: 'new-branch'
-          gitUserName: 'SavSamoylov'
-          gitEmail: ${{ github.secrets.GIT_EMAIL }}
 

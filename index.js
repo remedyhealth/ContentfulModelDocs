@@ -39,8 +39,7 @@ async function queryContentful() {
   // Github Contexts
   const { job, runNumber, payload } = github.context
   const { 'head_commit': headCommit, repository, pusher} = payload
-  console.log(job, runNumber)
-  console.log(headCommit, repository)
+
   if (headCommit.message.includes('[NO_RERUN]')) {
     return
   }
@@ -65,8 +64,9 @@ async function queryContentful() {
     const queryUrl = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}&order=name&${queryParams}`
     const outputPath = path.join(__dirname, outputDir, fileName + '.md')
     const outputRelativePath = path.join(outputDir, fileName + '.md')
-    console.log(outputPath, outputRelativePath)
+    
     io.mkdirP(outputDir)
+    
     core.info(`Fetching data from Contentful: ${queryUrl}`)
     
     const response = await fetch(queryUrl)
@@ -112,18 +112,7 @@ ${createTables(formattedRes)}
 
     const uploadResult = await artifactClient.uploadArtifact(artifactName, files, rootDirectory, options)
 
-    // await exec.exec('git --version');
-    // await exec.exec('git rev-parse --abbrev-ref HEAD');
-    // console.log(await exec.exec('git remote -v'))
-    // console.log(process.cwd())
     const gitStatus = await git.status()
-    // console.log(gitStatus)
-    // console.log(
-    //   '> Current git config\n' +
-    //   JSON.stringify((await git.listConfig()).all, null, 2)
-    // )
-    
-    // console.log(gitStatus['not_added'].includes(outputPath))
     
     if (gitStatus['not_added'].includes(outputPath) || gitStatus['not_added'].includes(outputRelativePath)) {
       await git
@@ -136,49 +125,18 @@ ${createTables(formattedRes)}
         await git.push('origin', branchName)
       } catch (err) {
         console.error(err)
-        await git.fetch('origin', branchName, ['--force'])
+        // await git.fetch('origin', branchName, ['--force'])
         
-        try {
-          await git.checkout(branchName)
-          await git.push('origin', branchName)
-        } catch (err) {
-          console.log(err)
-          await git.checkoutLocalBranch(branchName)
-          await git.push(['-u', 'origin', branchName])
-        }
-        
+        // try {
+        //   await git.checkout(branchName)
+        //   await git.push('origin', branchName)
+        // } catch (err) {
+        //   console.log(err)
+        //   await git.checkoutLocalBranch(branchName)
+        //   await git.push(['-u', 'origin', branchName])
+        // }
       }
     }
-    // console.log(JSON.stringify((await git.status()), null, 2))
-    // await exec.exec('git rev-parse --abbrev-ref HEAD');
-    // console.log(
-    //   '> Current git config\n' +
-    //   JSON.stringify((await git.listConfig()).all, null, 2)
-    // )
-    // console.log(path.resolve(__dirname))
-    // const diff = await git.diffSummary()
-    // console.log(diff)
-    
-    // const command = spawn('ls', ['-la'])
-
-    // command.stdout.on('data', (data) => {
-    //   console.log(`${data}`)
-    // })
-
-    // command.stderr.on('data', (data) => {
-    //   console.error(`${data}`)
-    // })
-
-    // command.on('close', (code) => {
-    //   console.log(`child process exited with code ${code}`)
-    //   process.exit(code)
-    // })
-
-    // Get the JSON webhook payload for the event that triggered the workflow
-    // const payload = JSON.stringify(github.context.payload, undefined, 2)
-    // const context = JSON.stringify(github.context, undefined, 2)
-    // console.log(`The event context: ${context}`);
-    // console.log(`The event payload: ${payload}`);
   } catch (error) {
     core.setFailed(error.message);
   }
