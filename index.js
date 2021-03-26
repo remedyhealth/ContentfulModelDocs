@@ -93,7 +93,7 @@ ${createTables(formattedRes)}
     const gitStatus = await git.status()
     console.log(gitStatus)
     if (gitStatus['not_added'].includes('content-model.md')) {
-      git.add(['content-model.md'])
+      await git.add(['content-model.md'])
     }
     console.log(JSON.stringify((await git.status()), null, 2))
     // console.log(
