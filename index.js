@@ -6,7 +6,7 @@ const simpleGit = require('simple-git');
 const git = simpleGit();
 const fetch = require('node-fetch');
 const fs = require('fs')
-import path from 'path'
+const path = require('path')
 
 const createToC = (cTypes = []) => {
   let str = ''
