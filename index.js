@@ -120,11 +120,11 @@ ${createTables(formattedRes)}
     
     console.log(gitStatus['not_added'].includes(outputPath))
     
-    if (gitStatus['not_added'].includes(outputPath)) {
+    if (gitStatus['not_added'].includes(outputPath) || gitStatus['not_added'].includes(outputRelativePath)) {
       await git
         .addConfig('user.email', gitUserName || github.context.payload.pusher.email)
         .addConfig('user.name', gitEmail || github.context.payload.pusher.name)
-      await git.add([outputPath])
+      await git.add([outputRelativePath])
       await git.commit(`docs: job ${github.context.job} ${github.context.runNumber} [NO_RERUN]`)
       await git.push()
     }
