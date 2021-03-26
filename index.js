@@ -58,7 +58,7 @@ async function queryContentful() {
     core.setSecret(gitEmail)
     
     const queryUrl = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}&order=name&${queryParams}`
-    const outputPath = path.join(__dirname, outputDir, fileName)
+    const outputPath = path.join(__dirname, outputDir, fileName + '.md')
     console.log(outputPath)
     io.mkdirP(outputDir)
     core.info(`Fetching data from Contentful: ${queryUrl}`)
@@ -116,6 +116,9 @@ ${createTables(formattedRes)}
       '> Current git config\n' +
       JSON.stringify((await git.listConfig()).all, null, 2)
     )
+    
+    console.log(gitStatus['not_added'].includes(outputPath))
+    
     if (gitStatus['not_added'].includes(outputPath)) {
       await git
         .addConfig('user.email', gitUserName || github.context.payload.pusher.email)
