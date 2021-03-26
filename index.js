@@ -13,12 +13,10 @@ const createToC = (cTypes = []) => {
 const jsonToMarkdownTable = (arr = []) => {
   let str = ''
   arr.forEach((row) => {
-    const tableRows = row.map((columnValue, index) => {
+    const tableRow = row.map((columnValue, index) => {
       return (index === 0 ? `| ${columnValue}` : columnValue) + ' |'
     })
-    tableRows.forEach((row) => {
-      str+=`${row}\n`
-    })
+    str+=`${tableRow}\n`
   })
   return str
 }
