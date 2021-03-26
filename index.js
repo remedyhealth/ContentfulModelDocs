@@ -86,7 +86,7 @@ ${createTables(formattedRes)}
 
     // await exec.exec('git --version');
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
-    console.log(path.dirname())
+    console.log(path.resolve(__dirname))
     const diff = await git.diff()
     console.log(diff)
 
