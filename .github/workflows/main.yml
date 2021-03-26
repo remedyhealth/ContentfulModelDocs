@@ -1,4 +1,12 @@
-on: [push]
+# Workflow name
+name: 'Contentful Content Model Check'
+
+# Event for the workflow:
+# Run when new code is pushed/merged to the `main` branch
+on: 
+  push:
+    branches:
+      - main
 
 jobs:
   contentful_content_model:
