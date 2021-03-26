@@ -35,6 +35,9 @@ const createTables = (cTypes = []) => {
 }
 
 async function queryContentful() {
+  if (github.context.payload['head_commit'].message.includes('[NO_RERUN]')) {
+    return
+  }
   try {
     const git = simpleGit({ baseDir: path.resolve(__dirname) });
     const spaceId = core.getInput('space_id');
@@ -94,6 +97,8 @@ ${createTables(formattedRes)}
     console.log(gitStatus)
     if (gitStatus['not_added'].includes('content-model.md')) {
       await git.add(['content-model.md'])
+      await git.commit(`docs: job ${github.context.job} ${github.context.runNumber} [NO_RERUN]`)
+      await git.push()
     }
     console.log(JSON.stringify((await git.status()), null, 2))
     await exec.exec('git rev-parse --abbrev-ref HEAD');
