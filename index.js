@@ -136,6 +136,7 @@ ${createTables(formattedRes)}
         await git.push('origin', branchName)
       } catch (err) {
         console.error(err)
+        await git.fetch('origin', branchName)
         await git
           .checkout(branchName)
           .catch((err) => git.checkoutLocalBranch(branchName))
