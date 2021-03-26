@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Contentful Content Model Doc Generator'
+description: 'Generate Markdown docs of a Contentful space Content Model.'
 inputs:
   space_id: # ID of the Contentful space in form of a string
     description: 'ID of the Contentful space in form of a string'
@@ -10,9 +10,6 @@ inputs:
   access_token: # A production Contentful Content Delivery API key
     description: 'A production Contentful Content Delivery API key'
     required: true
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'node12'
   main: 'index.js'

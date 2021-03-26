@@ -3,7 +3,7 @@ on: [push]
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Build Contentful Model Documentation
     steps:
       # To use this repository's private action,
       # you must check out the repository
@@ -16,6 +16,4 @@ jobs:
           space_id: ${{ secrets.CONTENTFUL_SPACE_ID }}
           environment_id: 'master'
           access_token: ${{ secrets.CONTENTFUL_KEY }}
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.contentful.outputs.time }}"
+
