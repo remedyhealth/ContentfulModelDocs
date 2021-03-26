@@ -97,7 +97,7 @@ ${createTables(formattedRes)}
     const diff = await git.diffSummary()
     console.log(diff)
     
-    const command = spawn('ls -la')
+    const command = spawn('ls', ['-la'])
 
     command.stdout.on('data', (data) => {
       console.log(`${data}`)
