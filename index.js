@@ -131,7 +131,13 @@ ${createTables(formattedRes)}
         .addConfig('user.name', gitEmail || pusher.name)
       await git.add([outputRelativePath])
       await git.commit(`docs: job ${job} ${runNumber} [NO_RERUN]`)
-      await git.push('origin', branchName)
+      
+      try {
+        await git.push('origin', branchName)
+      } catch (err) {
+        console.error(err)
+        await git.push(['-u', 'origin', branchName])
+      }
     }
     // console.log(JSON.stringify((await git.status()), null, 2))
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
