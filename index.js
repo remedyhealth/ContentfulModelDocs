@@ -38,10 +38,10 @@ const createTables = (cTypes = []) => {
 async function queryContentful() {
   // Github Contexts
   const { job, runNumber, payload } = github.context
-  const { 'head_commit': headCommit, repository} = payload
+  const { 'head_commit': headCommit, repository, pusher} = payload
   console.log(job, runNumber)
   console.log(headCommit, repository)
-  if (github.context.payload['head_commit'].message.includes('[NO_RERUN]')) {
+  if (headCommit.message.includes('[NO_RERUN]')) {
     return
   }
   
@@ -54,7 +54,7 @@ async function queryContentful() {
     const queryParams = core.getInput('queryParams');
     const fileName = core.getInput('fileName');
     const outputDir = core.getInput('outputDir') || '.';
-    const branchName = core.getInput('branchName') || github.context.payload.repository['master_branch'] || undefined;
+    const branchName = core.getInput('branchName') || repository['master_branch'] || undefined;
     const gitUserName = core.getInput('gitUserName');
     const gitEmail = core.getInput('gitEmail');
     core.setSecret(spaceId)
@@ -127,10 +127,10 @@ ${createTables(formattedRes)}
     
     if (gitStatus['not_added'].includes(outputPath) || gitStatus['not_added'].includes(outputRelativePath)) {
       await git
-        .addConfig('user.email', gitUserName || github.context.payload.pusher.email)
-        .addConfig('user.name', gitEmail || github.context.payload.pusher.name)
+        .addConfig('user.email', gitUserName || pusher.email)
+        .addConfig('user.name', gitEmail || pusher.name)
       await git.add([outputRelativePath])
-      await git.commit(`docs: job ${github.context.job} ${github.context.runNumber} [NO_RERUN]`)
+      await git.commit(`docs: job ${job} ${runNumber} [NO_RERUN]`)
       await git.push('origin', branchName)
     }
     // console.log(JSON.stringify((await git.status()), null, 2))

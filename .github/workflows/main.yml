@@ -24,4 +24,5 @@ jobs:
           spaceId: ${{ secrets.CONTENTFUL_SPACE_ID }}
           envId: 'master'
           accessToken: ${{ secrets.CONTENTFUL_KEY }}
+          fileName: 'test-new-file-name'
 
