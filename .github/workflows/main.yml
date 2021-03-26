@@ -27,4 +27,6 @@ jobs:
           fileName: 'test-new-file-name'
           outputDir: 'content-model'
           branchName: 'new-branch'
+          gitUserName: 'SavSamoylov'
+          gitEmail: ${{ github.secrets.GIT_EMAIL }}
 
