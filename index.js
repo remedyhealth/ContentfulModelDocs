@@ -140,12 +140,13 @@ ${createTables(formattedRes)}
         
         try {
           await git.checkout(branchName)
+          await git.push(['origin', branchName])
         } catch (err) {
           console.log(err)
           await git.checkoutLocalBranch(branchName)
+          await git.push(['-u', 'origin', branchName])
         }
         
-        await git.push(['-u', 'origin', branchName])
       }
     }
     // console.log(JSON.stringify((await git.status()), null, 2))
