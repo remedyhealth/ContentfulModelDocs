@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/SavSamoylov/ContentfulModelDocs#readme",
   "dependencies": {
+    "@actions/artifact": "^0.5.0",
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0"
   }
