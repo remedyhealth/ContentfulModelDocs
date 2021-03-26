@@ -24,7 +24,7 @@ const jsonToMarkdownTable = (fields = []) => {
 const createTables = (cTypes = []) => {
   let str = ''
   cTypes.forEach(({name, fields}) => {
-    str+=`\n### ${name}\n${jsonToMarkdownTable(fields)}`
+    str+=`\n### ${name}\n${jsonToMarkdownTable(fields)}\n`
   })
   return str
 }
