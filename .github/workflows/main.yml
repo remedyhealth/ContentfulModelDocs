@@ -25,5 +25,5 @@ jobs:
           envId: 'master'
           accessToken: ${{ secrets.CONTENTFUL_KEY }}
           fileName: 'test-new-file-name'
-          outputDir: 'whatever'
+          outputDir: 'whatever/whatever'
 
