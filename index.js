@@ -86,6 +86,7 @@ ${createTables(formattedRes)}
 
     // await exec.exec('git --version');
     // await exec.exec('git rev-parse --abbrev-ref HEAD');
+    console.log(await exec.exec('git remote -v'))
     console.log(path.resolve(__dirname))
     const diff = await git.diffSummary()
     console.log(diff)
