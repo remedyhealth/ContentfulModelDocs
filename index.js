@@ -38,7 +38,9 @@ const createTables = (cTypes = []) => {
 async function queryContentful() {
   // Github Contexts
   const { job, runNumber, payload } = github.context
-  const { 'head_commit': headCommit, repository, pusher} = payload
+  const { 'head_commit': headCommit, repository, pusher } = payload
+  
+  console.log(github.context) // TODO: delete
 
   if (headCommit.message.includes('[NO_RERUN]')) {
     return
