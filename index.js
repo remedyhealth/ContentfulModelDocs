@@ -118,8 +118,8 @@ ${createTables(formattedRes)}
     console.log('Git status:\n', gitStatus)
     if (gitStatus['not_added'].includes(outputPath) || gitStatus['not_added'].includes(outputRelativePath)) {
       await git
-        .addConfig('user.email', gitUserName || pusher.email)
-        .addConfig('user.name', gitEmail || pusher.name)
+        .addConfig('user.email', gitEmail || pusher.email)
+        .addConfig('user.name', gitUserName || pusher.name)
       
       core.debug(git.branchLocal())
       console.log(git.branchLocal())
