@@ -55,7 +55,7 @@ async function queryContentful() {
     const queryParams = core.getInput('queryParams');
     const fileName = core.getInput('fileName');
     const outputDir = core.getInput('outputDir') || '.';
-    const branchName = core.getInput('branchName') || repository['master_branch'] || undefined;
+    const branchName = core.getInput('branchName') || 'gh-pages';
     const gitUserName = core.getInput('gitUserName');
     const gitEmail = core.getInput('gitEmail');
     core.setSecret(spaceId)
@@ -115,6 +115,7 @@ ${createTables(formattedRes)}
     const uploadResult = await artifactClient.uploadArtifact(artifactName, files, rootDirectory, options)
 
     const gitStatus = await git.status()
+    core.debug(git.branchLocal())
     
     if (gitStatus['not_added'].includes(outputPath) || gitStatus['not_added'].includes(outputRelativePath)) {
       await git
