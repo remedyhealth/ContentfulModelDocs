@@ -115,7 +115,7 @@ ${createTables(formattedRes)}
     const uploadResult = await artifactClient.uploadArtifact(artifactName, files, rootDirectory, options)
 
     const gitStatus = await git.status()
-    
+    console.log('Git status:\n', gitStatus)
     if (gitStatus['not_added'].includes(outputPath) || gitStatus['not_added'].includes(outputRelativePath)) {
       await git
         .addConfig('user.email', gitUserName || pusher.email)
