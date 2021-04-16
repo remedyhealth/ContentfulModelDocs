@@ -121,8 +121,8 @@ ${createTables(formattedRes)}
         .addConfig('user.email', gitEmail || pusher.email)
         .addConfig('user.name', gitUserName || pusher.name)
       
-      core.debug(git.branchLocal())
-      console.log(git.branchLocal())
+      console.log(await git.branchLocal())
+      await git.deleteLocalBranch('anotherBranch')
       // await git.pull()
       // await git.add([outputRelativePath])
       // await git.commit(`docs: job ${job} ${runNumber} [NO_RERUN]`)
