@@ -123,7 +123,7 @@ ${createTables(formattedRes)}
       
       console.log(await git.branchLocal())
       // await git.push(['origin', '--delete', branchName])
-      await git.listRemote(branchName)
+      console.log(await git.listRemote(branchName))
       // await git.removeRemote(branchName)
       // await git.pull()
       // await git.add([outputRelativePath])
