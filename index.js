@@ -122,7 +122,7 @@ ${createTables(formattedRes)}
         .addConfig('user.name', gitUserName || pusher.name)
       
       console.log(await git.branchLocal())
-      await git.branch(['-D', 'anotherBranch'])
+      await git.push(['origin', '--delete', 'debugging'])
       // await git.pull()
       // await git.add([outputRelativePath])
       // await git.commit(`docs: job ${job} ${runNumber} [NO_RERUN]`)
