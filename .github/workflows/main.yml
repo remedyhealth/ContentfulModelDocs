@@ -29,6 +29,6 @@ jobs:
           accessToken: ${{ secrets.CONTENTFUL_KEY }}
           fileName: 'data-model'
           outputDir: 'content-model'
-          # gitUserName: 'SavSamoylov'
-          # gitEmail: ${{ github.secrets.GIT_EMAIL }}
+          gitUserName: 'SavSamoylov'
+          gitEmail: ${{ github.secrets.GIT_EMAIL }}
           branchName: 'new-branch'
