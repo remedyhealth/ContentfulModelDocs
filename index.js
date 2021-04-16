@@ -125,7 +125,7 @@ ${createTables(formattedRes)}
       
       console.log(await git.branchLocal())
       // await git.push(['origin', '--delete', branchName])
-      console.log(await git.listRemote(['--exit-code', '--heads', repository['ssh_url'], branchName]))
+      // console.log(await git.listRemote(['--exit-code', '--heads', repository['ssh_url'], branchName]))
       
       const branchExists = await fetch(`https://api.github.com/repos/SavSamoylov/ContentfulModelDocs/branches/${branchName}`, {
         method: 'GET',
