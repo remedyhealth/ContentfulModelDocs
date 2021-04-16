@@ -40,7 +40,7 @@ async function queryContentful() {
   const { job, runNumber, payload } = github.context
   const { 'head_commit': headCommit, repository, pusher } = payload
   
-  // console.log(github.context)
+  console.log(github.context)
 
   // if (headCommit.message.includes('[NO_RERUN]')) {
   //   return
