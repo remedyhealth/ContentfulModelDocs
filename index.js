@@ -58,10 +58,12 @@ async function queryContentful() {
     const branchName = core.getInput('branchName') || 'gh-pages';
     const gitUserName = core.getInput('gitUserName');
     const gitEmail = core.getInput('gitEmail');
+    const gitHubToken = core.getInput('gitHubToken');
     core.setSecret(spaceId)
     core.setSecret(accessToken)
     core.setSecret(gitUserName)
     core.setSecret(gitEmail)
+    core.setSecret(gitHubToken)
     
     const queryUrl = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/content_types?access_token=${accessToken}&order=name&${queryParams}`
     const outputPath = path.join(__dirname, outputDir, fileName + '.md')
@@ -124,6 +126,19 @@ ${createTables(formattedRes)}
       console.log(await git.branchLocal())
       // await git.push(['origin', '--delete', branchName])
       console.log(await git.listRemote(['--exit-code', '--heads', repository['ssh_url'], branchName]))
+      
+      const branchExists = await fetch(`https://api.github.com/repos/SavSamoylov/ContentfulModelDocs/branches/${branchName}`, {
+        method: 'GET',
+        headers: {
+          'authorization': `Bearer ${gitHubToken}`,
+          'content-type': 'application/json'
+        }
+      })
+        .then(res => res.json())
+        .catch(err => {
+          core.setFailed(`Failed to query branch ${branchName}: ${err}`)
+        })
+      console.log(branchExists)
       // await git.removeRemote(branchName)
       // await git.pull()
       // await git.add([outputRelativePath])

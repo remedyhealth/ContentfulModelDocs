@@ -29,3 +29,4 @@ jobs:
           gitUserName: 'SavSamoylov'
           gitEmail: ${{ github.secrets.GIT_EMAIL }}
           branchName: 'new-branch'
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

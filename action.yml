@@ -32,6 +32,9 @@ inputs:
   gitEmail: # Authenticating git user.email
     description: 'Authenticating git user.email'
     required: false
+  gitHubToken: # Github Token
+    description: 'Github Token'
+    required: false
 runs:
   using: 'node12'
   main: 'index.js'
