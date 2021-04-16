@@ -25,6 +25,7 @@ inputs:
   branchName: # Name of branch to push to
     description: 'Name of branch to push to'
     required: false
+    default: 'gh-pages'
   gitUserName: # Authenticating git user.name
     description: 'Authenticating git user.name'
     required: false

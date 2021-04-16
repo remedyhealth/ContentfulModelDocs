@@ -40,11 +40,11 @@ async function queryContentful() {
   const { job, runNumber, payload } = github.context
   const { 'head_commit': headCommit, repository, pusher } = payload
   
-  console.log(github.context)
+  // console.log(github.context)
 
-  if (headCommit.message.includes('[NO_RERUN]')) {
-    return
-  }
+  // if (headCommit.message.includes('[NO_RERUN]')) {
+  //   return
+  // }
   
   try {
     const git = simpleGit({ baseDir: path.resolve(__dirname) });
@@ -55,7 +55,7 @@ async function queryContentful() {
     const queryParams = core.getInput('queryParams');
     const fileName = core.getInput('fileName');
     const outputDir = core.getInput('outputDir') || '.';
-    const branchName = core.getInput('branchName') || repository['master_branch'] || undefined;
+    const branchName = core.getInput('branchName') || 'gh-pages';
     const gitUserName = core.getInput('gitUserName');
     const gitEmail = core.getInput('gitEmail');
     core.setSecret(spaceId)
@@ -115,18 +115,21 @@ ${createTables(formattedRes)}
     const uploadResult = await artifactClient.uploadArtifact(artifactName, files, rootDirectory, options)
 
     const gitStatus = await git.status()
-    
+    console.log('Git status:\n', gitStatus)
     if (gitStatus['not_added'].includes(outputPath) || gitStatus['not_added'].includes(outputRelativePath)) {
       await git
-        .addConfig('user.email', gitUserName || pusher.email)
-        .addConfig('user.name', gitEmail || pusher.name)
+        .addConfig('user.email', gitEmail || pusher.email)
+        .addConfig('user.name', gitUserName || pusher.name)
+      
+      core.debug(git.branchLocal())
+      console.log(git.branchLocal())
       // await git.pull()
-      await git.add([outputRelativePath])
-      await git.commit(`docs: job ${job} ${runNumber} [NO_RERUN]`)
-      try {
-        await git.push('origin', branchName)
-      } catch (err) {
-        console.error(err)
+      // await git.add([outputRelativePath])
+      // await git.commit(`docs: job ${job} ${runNumber} [NO_RERUN]`)
+      // try {
+      //   await git.push('origin', branchName)
+      // } catch (err) {
+      //   console.error(err)
         // await git.fetch('origin', branchName, ['--force'])
         
         // try {
@@ -137,7 +140,7 @@ ${createTables(formattedRes)}
         //   await git.checkoutLocalBranch(branchName)
         //   await git.push(['-u', 'origin', branchName])
         // }
-      }
+      // }
     }
   } catch (error) {
     core.setFailed(error.message);
